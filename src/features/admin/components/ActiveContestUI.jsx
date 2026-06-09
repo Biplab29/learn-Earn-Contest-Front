@@ -1,4 +1,4 @@
-import { MoreVertical, Search } from "lucide-react";
+import { Search } from "lucide-react";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import ContestTable from "@/features/admin/components/ContestTable";

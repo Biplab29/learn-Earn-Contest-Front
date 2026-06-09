@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import AlertModal from "@/components/ui/AlertModal";
 import useAlertModal from "@/hooks/useAlertModal";
 import {
@@ -14,15 +14,15 @@ const MyInvitations = () => {
   const [acceptingToken, setAcceptingToken] = useState("");
   const { alertState, showAlert, closeAlert } = useAlertModal();
 
-  const broadcastInvitations = (nextInvitations) => {
+  const broadcastInvitations = useCallback((nextInvitations) => {
     window.dispatchEvent(
       new CustomEvent(INVITATIONS_UPDATED_EVENT, {
         detail: { invitations: nextInvitations },
       })
     );
-  };
+  }, []);
 
-  const fetchInvitations = async () => {
+  const fetchInvitations = useCallback(async () => {
     try {
       setLoading(true);
       const nextInvitations = await fetchMyInvitations();
@@ -36,7 +36,7 @@ const MyInvitations = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [broadcastInvitations, showAlert]);
 
   const acceptInvite = async (invite) => {
     const invitationReference = getInvitationReference(invite);
@@ -85,7 +85,7 @@ const MyInvitations = () => {
 
   useEffect(() => {
     fetchInvitations();
-  }, []);
+  }, [fetchInvitations]);
 
   if (loading) {
     return (

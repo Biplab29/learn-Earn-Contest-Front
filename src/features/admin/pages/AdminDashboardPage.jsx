@@ -34,11 +34,16 @@ const AdminDashboardPage = () => {
     const fetchData = async () => {
       try {
         const res = await API.get("/dashboard");
-        const api = res?.data?.data || {};
+
+        console.log("Dashboard API Response:", res.data);
+
+        // ✅ FIXED
+        const api = res?.data || {};
+
         const activeContests = api.activeContests || {};
         const completedContests = api.completedContests || {};
         const submissions = api.submissions || {};
-        const approvals = api.approvals || {};
+        const evaluations = api.evaluations || {};
         const teams = api.teams || {};
 
         const formattedData = {
@@ -46,21 +51,28 @@ const AdminDashboardPage = () => {
             count: activeContests.count || 0,
             list: activeContests.list || [],
           },
+
           completedContestList: {
             count: completedContests.count || 0,
             list: completedContests.list || [],
           },
+
           users: {
             count: api.totalUsers || 0,
             list: [],
           },
+
           submissions: {
             count: submissions.total || 0,
             list: [],
           },
+
           pendingList: {
-            count: approvals.total ?? submissions.pending ?? 0,
-            submissionPendingCount: submissions.pending || 0,
+            count: evaluations.pending ?? 0,
+            submissionPendingCount:
+              submissions.pendingEvaluation ||
+              submissions.pending ||
+              0,
             teamPendingCount: teams.pendingApproval || 0,
             recentPendingTeams: teams.recentPending || [],
           },
@@ -69,11 +81,26 @@ const AdminDashboardPage = () => {
         setDashboardData(formattedData);
 
         const chartFormatted = [
-          { name: "Active", value: activeContests.count || 0 },
-          { name: "Completed", value: completedContests.count || 0 },
-          { name: "Users", value: api.totalUsers || 0 },
-          { name: "Submissions", value: submissions.total || 0 },
-          { name: "Pending", value: approvals.total ?? submissions.pending ?? 0 },
+          {
+            name: "Active",
+            value: activeContests.count || 0,
+          },
+          {
+            name: "Completed",
+            value: completedContests.count || 0,
+          },
+          {
+            name: "Users",
+            value: api.totalUsers || 0,
+          },
+          {
+            name: "Submissions",
+            value: submissions.total || 0,
+          },
+          {
+            name: "Pending",
+            value: evaluations.pending || 0,
+          },
         ];
 
         setChartData(chartFormatted);
@@ -140,7 +167,7 @@ const AdminDashboardPage = () => {
           finalData = dashboardData.pendingList || null;
           break;
 
-        case "EVALUATION":
+        case "EVALUATION": {
           res = await API.get(
             "/submission/submitted-contests-count",
             config
@@ -159,8 +186,9 @@ const AdminDashboardPage = () => {
           );
 
           break;
+        }
 
-        case "DASHBOARD STATS":
+        case "DASHBOARD STATS": {
           const usersRes = await API.get("/auth/users", config);
           const contestRes = await API.get("/contest/active", config);
 
@@ -174,6 +202,7 @@ const AdminDashboardPage = () => {
             ).length,
           };
           break;
+        }
 
         default:
           finalData = null;

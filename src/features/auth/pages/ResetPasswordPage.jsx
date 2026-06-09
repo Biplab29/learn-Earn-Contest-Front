@@ -34,74 +34,74 @@ const ResetPasswordPage = () => {
         `https://learn-earn-contest-3.onrender.com/api/v1/auth/reset-password/${token}`,
         { password: form.password }
       );
-      toast.success(data.message || "Password reset successful ✅");
+      toast.success(data.message || "Password reset successful.");
       navigate("/login");
     } catch (error) {
-      toast.error(error.response?.data?.message || "Reset failed ❌");
+      toast.error(error.response?.data?.message || "Reset failed.");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center relative overflow-hidden bg-black">
-      <div className="absolute w-[500px] h-[500px] bg-[#82C600]/30 rounded-full blur-[120px] top-[-100px] left-[-100px] animate-pulse"></div>
-      <div className="absolute w-[400px] h-[400px] bg-green-400/20 rounded-full blur-[120px] bottom-[-80px] right-[-80px] animate-pulse"></div>
+    <div className="theme-page-shell min-h-screen flex items-center justify-center relative overflow-hidden px-4 py-10">
+      <div className="absolute w-[500px] h-[500px] bg-[#82C600]/20 rounded-full blur-[120px] top-[-100px] left-[-100px] animate-pulse"></div>
+      <div className="absolute w-[400px] h-[400px] bg-green-400/15 rounded-full blur-[120px] bottom-[-80px] right-[-80px] animate-pulse"></div>
 
-      <div className="relative z-10 w-full max-w-md px-4">
-        <div className="bg-white/10 backdrop-blur-3xl border border-white/20 rounded-3xl p-8 shadow-[0_0_40px_rgba(130,198,0,0.3)]">
+      <div className="relative z-10 w-full max-w-md">
+        <div className="theme-surface rounded-3xl p-8 backdrop-blur-3xl shadow-[var(--theme-shadow-md)]">
           <div className="text-center mb-8">
             <img src={logo} alt="logo" className="mx-auto w-16 mb-3" />
-            <h1 className="text-white font-bold text-xl">Reset Password</h1>
-            <p className="text-white/60 text-sm">Enter your new password</p>
+            <h1 className="theme-text font-bold text-xl">Reset Password</h1>
+            <p className="theme-text-soft text-sm">Enter your new password</p>
           </div>
 
           <form onSubmit={handleResetPassword}>
             <div className="relative mb-6">
-              <FiLock className="absolute left-4 top-4 text-white/50" />
+              <FiLock className="theme-text-muted absolute left-4 top-4" />
               <input
                 type={showPass ? "text" : "password"}
                 name="password"
                 value={form.password}
                 onChange={handleChange}
-                className="w-full pl-10 pr-10 pt-5 pb-2 rounded-xl bg-white/5 border border-white/20 text-white outline-none focus:ring-2 focus:ring-[#82C600]"
+                className="theme-input w-full pl-10 pr-10 pt-5 pb-2 rounded-xl outline-none focus:ring-2 focus:ring-[#82C600]/40"
               />
               <label
                 className={`absolute left-10 text-sm transition-all ${
-                  form.password ? "top-1 text-xs text-[#a3e635]" : "top-3 text-white/50"
+                  form.password ? "top-1 text-xs text-[var(--theme-primary)]" : "top-3 theme-text-muted"
                 }`}
               >
                 New Password
               </label>
               <span
                 onClick={() => setShowPass(!showPass)}
-                className="absolute right-4 top-4 text-white/60 cursor-pointer"
+                className="theme-text-muted absolute right-4 top-4 cursor-pointer"
               >
                 {showPass ? <FiEyeOff /> : <FiEye />}
               </span>
             </div>
 
             <div className="relative mb-6">
-              <FiLock className="absolute left-4 top-4 text-white/50" />
+              <FiLock className="theme-text-muted absolute left-4 top-4" />
               <input
                 type={showConfirmPass ? "text" : "password"}
                 name="confirmPassword"
                 value={form.confirmPassword}
                 onChange={handleChange}
-                className="w-full pl-10 pr-10 pt-5 pb-2 rounded-xl bg-white/5 border border-white/20 text-white outline-none focus:ring-2 focus:ring-[#82C600]"
+                className="theme-input w-full pl-10 pr-10 pt-5 pb-2 rounded-xl outline-none focus:ring-2 focus:ring-[#82C600]/40"
               />
               <label
                 className={`absolute left-10 text-sm transition-all ${
                   form.confirmPassword
-                    ? "top-1 text-xs text-[#a3e635]"
-                    : "top-3 text-white/50"
+                    ? "top-1 text-xs text-[var(--theme-primary)]"
+                    : "top-3 theme-text-muted"
                 }`}
               >
                 Confirm Password
               </label>
               <span
                 onClick={() => setShowConfirmPass(!showConfirmPass)}
-                className="absolute right-4 top-4 text-white/60 cursor-pointer"
+                className="theme-text-muted absolute right-4 top-4 cursor-pointer"
               >
                 {showConfirmPass ? <FiEyeOff /> : <FiEye />}
               </span>
@@ -110,7 +110,7 @@ const ResetPasswordPage = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3 rounded-xl bg-gradient-to-r from-[#82C600] to-[#a3e635] text-black font-semibold hover:scale-105 transition shadow-lg disabled:opacity-50"
+              className="theme-brand-button w-full py-3 rounded-xl font-semibold hover:scale-105 transition disabled:opacity-50"
             >
               {loading ? "Updating..." : "Reset Password"}
             </button>
@@ -118,7 +118,7 @@ const ResetPasswordPage = () => {
 
           <Link
             to="/login"
-            className="flex items-center justify-center gap-2 text-sm text-white/70 hover:text-white mt-6 transition"
+            className="theme-text-soft flex items-center justify-center gap-2 text-sm hover:text-[var(--theme-primary)] mt-6 transition"
           >
             <FiArrowLeft />
             Back to Login

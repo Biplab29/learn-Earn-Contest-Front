@@ -1,9 +1,4 @@
-
-
-
-import React from "react";
 import { useNavigate } from "react-router-dom";
-import { FiX } from "react-icons/fi";
 
 const DashboardModal = ({
   isOpen,

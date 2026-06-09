@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
 import {
-    FiArrowRight,
     FiCalendar,
     FiClock,
     FiDownload,
@@ -56,8 +55,12 @@ const formatDateTime = (value, fallback = "N/A") => {
     });
 };
 
-const ContestPreviewModal = ({ selectedContest, onClose, onEdit={handleEditOpen},
-onDelete={handleDelete} }) => {
+const ContestPreviewModal = ({
+    selectedContest,
+    onClose,
+    onEdit = () => {},
+    onDelete = () => {},
+}) => {
     const navigate = useNavigate();
 
     if (!selectedContest) {

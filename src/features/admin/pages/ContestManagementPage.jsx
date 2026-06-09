@@ -10,12 +10,10 @@ import {
 
 import {
   FiDownload,
-  FiEdit2,
   FiImage,
   FiPlusCircle,
   FiSave,
   FiSearch,
-  FiTrash2,
   FiUsers,
   FiX,
 } from "react-icons/fi";

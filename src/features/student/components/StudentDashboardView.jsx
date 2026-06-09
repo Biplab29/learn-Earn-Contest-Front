@@ -1,14 +1,8 @@
 
-
-
-
-
-
 import Card from "@/components/ui/Card";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchContests } from "@/features/contest/contestSlice";
-import API from "../../../services/axios";
 import { useNavigate } from "react-router-dom";
 
 import { FiClock, FiCheckCircle, FiLoader, FiAlertCircle } from "react-icons/fi";

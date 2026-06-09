@@ -8,10 +8,11 @@ textarea {
 }
 :root {
   color-scheme: light;
-  --theme-primary: #82c600;
-  --theme-primary-hover: #74b000;
-  --theme-primary-rgb: 130, 198, 0;
+  --theme-primary: #4f7c00;
+  --theme-primary-hover: #416800;
+  --theme-primary-rgb: 79, 124, 0;
   --theme-primary-contrast: #142400;
+  --theme-link: #4f7c00;
   --theme-bg: #f2f6fb;
   --theme-surface: #ffffff;
   --theme-surface-muted: #f5f8fc;
@@ -40,6 +41,10 @@ textarea {
 
 html.dark {
   color-scheme: dark;
+  --theme-primary: #a3e635;
+  --theme-primary-hover: #bef264;
+  --theme-primary-rgb: 163, 230, 53;
+  --theme-link: #bef264;
   --theme-bg: #030712;
   --theme-surface: #0f172a;
   --theme-surface-muted: #111b2f;
@@ -317,6 +322,14 @@ select {
 
 .theme-text-muted {
   color: var(--theme-text-muted) !important;
+}
+
+.theme-link {
+  color: var(--theme-link) !important;
+}
+
+.theme-link:hover {
+  color: var(--theme-primary-hover) !important;
 }
 
 .theme-card-hover {

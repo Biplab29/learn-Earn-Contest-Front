@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { FaTrophy, FaMedal, FaFire } from "react-icons/fa";
+import { FaFire } from "react-icons/fa";
 
 const LeaderboardPage = () => {
   const [leaders, setLeaders] = useState([]);
