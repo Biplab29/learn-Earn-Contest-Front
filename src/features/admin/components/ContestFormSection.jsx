@@ -17,36 +17,31 @@ const ContestFormSection = ({
 }) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [search, setSearch] = useState("");
-  const [categorie, setCategorie] = useState([]);
+  const [categorie, setCategorie] = useState([
+    "All",
+    "Web Development",
+    "Mobile App Development",
+    "AI & Machine Learning",
+    "Data Science",
+    "JavaScript & DSA",
+    "Competitive Programming",
+    "UI/UX Design",
+    "Full Stack",
+    "Backend Development",
+    "Frontend Development",
+    "DevOps & Cloud",
+    "Cyber Security",
+    "Blockchain & Web3",
+    "Game Development",
+    "Open Source",
+    "Software Engineering",
+    "Database Systems",
+    "API Development",
+    "Other"
+  ]);
   const filteredCategories = categorie.filter((cat) =>
     cat.toLowerCase().includes(search.toLowerCase())
   );
-
-  useEffect(() => {
-    // 🔥 You can later replace with API
-    setCategorie([
-      "All",
-      "Web Development",
-      "Mobile App Development",
-      "AI & Machine Learning",
-      "Data Science",
-      "JavaScript & DSA",
-      "Competitive Programming",
-      "UI/UX Design",
-      "Full Stack",
-      "Backend Development",
-      "Frontend Development",
-      "DevOps & Cloud",
-      "Cyber Security",
-      "Blockchain & Web3",
-      "Game Development",
-      "Open Source",
-      "Software Engineering",
-      "Database Systems",
-      "API Development",
-      "Other"
-    ]);
-  }, []);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });

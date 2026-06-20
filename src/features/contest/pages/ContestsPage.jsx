@@ -8,6 +8,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchContests } from "@/features/contest/contestSlice";
 import ContestPreviewModal from "@/features/student/ContestPreviewModal";
 
+const formatDate = (value, fallback = "TBA") => {
+  if (!value) return fallback;
+  const date = new Date(value);
+  return isNaN(date.getTime()) ? fallback : date.toLocaleDateString();
+};
+
+const calculateDaysLeft = (deadline) => {
+  if (!deadline) return null;
+  const date = new Date(deadline);
+  if (isNaN(date.getTime())) return null;
+  return Math.ceil((date - new Date()) / (1000 * 60 * 60 * 24));
+};
+
 const ContestsPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -55,9 +68,7 @@ const ContestsPage = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
 
         {contests.map((item) => {
-          const daysLeft = Math.ceil(
-            (new Date(item.deadline) - new Date()) / (1000 * 60 * 60 * 24)
-          );
+          const daysLeft = calculateDaysLeft(item.deadline);
 
           return (
             <div
@@ -121,8 +132,8 @@ const ContestsPage = () => {
                 </div>
 
                 {/* TITLE (BOTTOM CLEAN) */}
-                <h3 className="absolute bottom-3 left-3 right-3 text-white font-bold text-sm sm:text-base md:text-lg leading-tight">
-                  {item.title}
+                <h3 className="absolute bottom-3 left-3 right-3 text-white font-bold text-sm sm:text-base md:text-lg leading-tight truncate">
+                  {item.title || "Untitled Contest"}
                 </h3>
 
               </div>
@@ -131,7 +142,7 @@ const ContestsPage = () => {
               <div className="p-5 flex flex-col justify-between">
 
                 <p className="theme-text-soft text-sm line-clamp-2">
-                  {item.description}
+                  {item.description || "No description available."}
                 </p>
 
                 {/* TAGS */}
@@ -149,7 +160,7 @@ const ContestsPage = () => {
 
                 {/* TIME */}
                 <p className="mt-2 text-xs text-rose-500 dark:text-rose-300">
-                  ⏳ {daysLeft > 0 ? `${daysLeft} days left` : "Ended"}
+                  ⏳ {daysLeft === null ? "TBA" : daysLeft > 0 ? `${daysLeft} days left` : "Ended"}
                 </p>
 
                 {/* STATS */}
@@ -158,14 +169,14 @@ const ContestsPage = () => {
                   <div className="theme-surface-muted rounded-xl p-3">
                     <p className="theme-text-muted">Start</p>
                     <p className="theme-text font-semibold">
-                      {new Date(item.startDate).toLocaleDateString()}
+                      {formatDate(item.startDate)}
                     </p>
                   </div>
 
                   <div className="theme-surface-muted rounded-xl p-3">
                     <p className="theme-text-muted">Deadline</p>
                     <p className="theme-text font-semibold">
-                      {new Date(item.deadline).toLocaleDateString()}
+                      {formatDate(item.deadline)}
                     </p>
                   </div>
 

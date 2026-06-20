@@ -8,47 +8,57 @@ import {
 } from "react";
 
 const LoaderContext = createContext();
-const LOADER_SHOW_DELAY_MS = 1000;
+const LOADER_SHOW_DELAY_MS = 50;
 
 export const LoaderProvider = ({ children }) => {
-  const [loadCount, setLoadCount] = useState(0);
-  const [loading, setLoading] = useState(false);
-  const [disableLoader, setDisableLoader] = useState(false); // ✅ NEW
+  const loadCountRef = useRef(0);
   const showTimeoutRef = useRef(null);
+  const isLoadingRef = useRef(false);
+  const disableLoaderRef = useRef(false);
+  
+  const [loading, setLoadingState] = useState(false);
 
-  // ✅ UPDATED
-  const showLoader = useCallback(() => {
-    if (disableLoader) return; // 🚀 stop loader for HomePage
-    setLoadCount((c) => c + 1);
-  }, [disableLoader]);
-
-  const hideLoader = useCallback(() => {
-    setLoadCount((c) => Math.max(c - 1, 0));
+  const setLoading = useCallback((value) => {
+    if (isLoadingRef.current !== value) {
+      isLoadingRef.current = value;
+      setLoadingState(value);
+    }
   }, []);
 
-  useEffect(() => {
-    if (disableLoader) {
-      setLoading(false);
-      return;
-    }
-
-    if (loadCount > 0) {
-      if (!loading && !showTimeoutRef.current) {
-        showTimeoutRef.current = window.setTimeout(() => {
-          setLoading(true);
-          showTimeoutRef.current = null;
-        }, LOADER_SHOW_DELAY_MS);
+  const setDisableLoader = useCallback((value) => {
+    disableLoaderRef.current = value;
+    if (value) {
+      if (showTimeoutRef.current) {
+        window.clearTimeout(showTimeoutRef.current);
+        showTimeoutRef.current = null;
       }
-      return;
+      setLoading(false);
     }
+  }, [setLoading]);
 
-    if (showTimeoutRef.current) {
-      window.clearTimeout(showTimeoutRef.current);
-      showTimeoutRef.current = null;
+  const showLoader = useCallback(() => {
+    if (disableLoaderRef.current) return;
+    loadCountRef.current += 1;
+    
+    if (loadCountRef.current > 0 && !showTimeoutRef.current && !isLoadingRef.current) {
+      showTimeoutRef.current = window.setTimeout(() => {
+        setLoading(true);
+        showTimeoutRef.current = null;
+      }, LOADER_SHOW_DELAY_MS);
     }
+  }, [setLoading]);
 
-    setLoading(false);
-  }, [loadCount, loading, disableLoader]);
+  const hideLoader = useCallback(() => {
+    loadCountRef.current = Math.max(loadCountRef.current - 1, 0);
+    
+    if (loadCountRef.current === 0) {
+      if (showTimeoutRef.current) {
+        window.clearTimeout(showTimeoutRef.current);
+        showTimeoutRef.current = null;
+      }
+      setLoading(false);
+    }
+  }, [setLoading]);
 
   useEffect(() => {
     return () => {

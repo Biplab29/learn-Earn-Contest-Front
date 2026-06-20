@@ -34,8 +34,18 @@ const Challenges = () => {
     return () => clearInterval(interval);
   }, [dispatch]);
 
+  const formatDate = (value, fallback = "TBA") => {
+    if (!value) return fallback;
+    const date = new Date(value);
+    return isNaN(date.getTime()) ? fallback : date.toLocaleDateString();
+  };
+
   const getTimeLeft = (deadline) => {
-    const total = new Date(deadline) - new Date();
+    if (!deadline) return null;
+    const date = new Date(deadline);
+    if (isNaN(date.getTime())) return null;
+
+    const total = date - new Date();
     if (total <= 0) return null;
 
     const s = Math.floor((total / 1000) % 60);
@@ -155,11 +165,11 @@ const Challenges = () => {
                       <div className="flex flex-col flex-1 p-3 sm:p-5">
 
                         <h3 className="text-sm sm:text-base lg:text-lg font-bold text-[var(--theme-text)] line-clamp-2 group-hover:text-[var(--theme-primary)]">
-                          {item.title}
+                          {item.title || "Untitled Contest"}
                         </h3>
 
                         <p className="text-xs sm:text-sm text-[var(--theme-text-soft)] mt-1 sm:mt-2 line-clamp-2">
-                          {item.description}
+                          {item.description || "No description available."}
                         </p>
 
                         <div className="mt-2 sm:mt-3 flex items-center gap-2 text-[var(--theme-primary)] text-xs sm:text-sm font-semibold">
@@ -169,7 +179,7 @@ const Challenges = () => {
 
                         <div className="flex items-center gap-2 text-[10px] sm:text-xs text-[var(--theme-text-muted)] mt-1 sm:mt-2">
                           <FiCalendar />
-                          {new Date(item.startDate).toLocaleDateString()}
+                          {formatDate(item.startDate)}
                         </div>
 
                         {t && item.status === "active" && (

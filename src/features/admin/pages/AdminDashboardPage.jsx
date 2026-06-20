@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import AdminDashboardView from "@/features/admin/components/AdminDashboardView";
 import DashboardModal from "@/features/admin/components/DashboardModal";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom"; // ✅ ADDED
+import { useNavigate } from "react-router-dom"; 
 
 const AdminDashboardPage = () => {
   const [dashboardData, setDashboardData] = useState({});
@@ -16,7 +16,7 @@ const AdminDashboardPage = () => {
   const [selectedContest, setSelectedContest] = useState(null);
 
   const reduxToken = useSelector((state) => state.auth.token);
-  const navigate = useNavigate(); // ✅ ADDED
+  const navigate = useNavigate(); 
 
   const extractData = (res) => {
     return (
@@ -148,24 +148,27 @@ const AdminDashboardPage = () => {
 
         // ❌ USERS CASE REMOVED (NOW NAVIGATES)
 
-        case "ACTIVE CONTESTS":
+        case "ACTIVE CONTESTS": {
           finalData = {
             totalActiveContests: dashboardData.activeContestList?.count || 0,
             contestList: dashboardData.activeContestList?.list || [],
           };
           break;
+        }
 
-        case "TOTAL SUBMISSIONS":
+        case "TOTAL SUBMISSIONS": {
           res = await API.get(
             "/submission/submitted-contests",
             config
           );
           finalData = extractData(res);
           break;
+        }
 
-        case "PENDING APPROVALS":
+        case "PENDING APPROVALS": {
           finalData = dashboardData.pendingList || null;
           break;
+        }
 
         case "EVALUATION": {
           res = await API.get(
@@ -204,8 +207,10 @@ const AdminDashboardPage = () => {
           break;
         }
 
-        default:
+        default: {
           finalData = null;
+          break;
+        }
       }
 
       setModalData(finalData);

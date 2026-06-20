@@ -2,18 +2,14 @@ import { useEffect, useState } from "react";
 import { FaFire } from "react-icons/fa";
 
 const LeaderboardPage = () => {
-  const [leaders, setLeaders] = useState([]);
-
   // 🔥 DEMO DATA (replace with API)
-  useEffect(() => {
-    setLeaders([
-      { name: "Utsav", score: 980, submissions: 12 },
-      { name: "Rahul", score: 870, submissions: 10 },
-      { name: "Aman", score: 820, submissions: 9 },
-      { name: "Priya", score: 780, submissions: 8 },
-      { name: "Sneha", score: 720, submissions: 7 },
-    ]);
-  }, []);
+  const [leaders, setLeaders] = useState([
+    { name: "Utsav", score: 980, submissions: 12 },
+    { name: "Rahul", score: 870, submissions: 10 },
+    { name: "Aman", score: 820, submissions: 9 },
+    { name: "Priya", score: 780, submissions: 8 },
+    { name: "Sneha", score: 720, submissions: 7 },
+  ]);
 
   const top3 = leaders.slice(0, 3);
   const others = leaders.slice(3);

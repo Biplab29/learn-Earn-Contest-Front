@@ -28,6 +28,12 @@ const StudentDashboardView = () => {
   const [tab, setTab] = useState("active");
   const [selectedContest, setSelectedContest] = useState(null);
 
+  const formatDate = (value, fallback = "TBA") => {
+    if (!value) return fallback;
+    const date = new Date(value);
+    return isNaN(date.getTime()) ? fallback : date.toLocaleDateString();
+  };
+
   // ✅ SAFE DEADLINE
   const getRemainingTime = (deadline) => {
     if (!deadline) return { text: "No deadline", color: "text-gray-400" };
@@ -276,7 +282,7 @@ const StudentDashboardView = () => {
 
                         <p className="text-xs text-gray-400 flex items-center gap-1 mt-1">
                           <FiClock />
-                          {new Date(contest.deadline).toLocaleDateString()}
+                          {formatDate(contest.deadline)}
                         </p>
                       </div>
 

@@ -127,6 +127,16 @@ const ContestPreviewModal = ({
         navigate(`/contest/${contestId}`);
     };
 
+    const handleEditOpen = () => {
+        if (onClose) onClose();
+        if (onEdit) onEdit(contest);
+    };
+
+    const handleDelete = () => {
+        if (onClose) onClose();
+        if (onDelete) onDelete(contestId);
+    };
+
     const infoCards = [
         {
             label: "Start",
@@ -282,10 +292,7 @@ const ContestPreviewModal = ({
 
                             {/* UPDATE */}
                             <button
-                                onClick={() => {
-                                    onClose();
-                                    onEdit(contest);
-                                }}
+                                onClick={handleEditOpen}
                                 className="bg-blue-500 text-white px-4 py-2 rounded-xl text-sm font-semibold hover:bg-blue-600"
                             >
                                 Edit
@@ -293,10 +300,7 @@ const ContestPreviewModal = ({
 
                             {/* DELETE */}
                             <button
-                                onClick={() => {
-                                    onClose();
-                                    onDelete(contestId);
-                                }}
+                                onClick={handleDelete}
                                 className="bg-red-500 text-white px-4 py-2 rounded-xl text-sm font-semibold hover:bg-red-600"
                             >
                                 Delete
