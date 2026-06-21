@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
-import {
+import {    
   deleteContest,
   fetchContests,
   updateContest,
@@ -383,8 +383,7 @@ const ContestManagementPage = () => {
         <div>
           <h1 className="theme-text text-2xl font-bold sm:text-3xl">
             All Contest Management
-          </h1>
-         
+          </h1>        
         </div>
 
         <div className="grid gap-3 sm:grid-cols-[1fr_auto] lg:min-w-[460px]">
