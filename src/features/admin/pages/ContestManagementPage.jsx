@@ -461,81 +461,70 @@ const ContestManagementPage = () => {
                   </div>
 
                   {/* CONTENT */}
-                  <div className="p-5 sm:p-6 flex flex-col justify-between">
+                  <div className="p-5 sm:p-6 flex flex-col gap-4">
 
-                    {/* HEADER */}
-                    <div className="flex items-start justify-between gap-4 min-h-[70px]">
-
-                      {/* TITLE + DESC */}
-                      <div className="max-w-[70%]">
-                        <h2 className="theme-text text-lg font-semibold line-clamp-1">
-                          {contest.title}
-                        </h2>
-
-                        <p className="theme-text-soft mt-1 text-sm line-clamp-2 min-h-[40px]">
-                          {contest.description}
-                        </p>
-                      </div>
-
-
+                    {/* TITLE + DESC */}
+                    <div>
+                      <h2 className="theme-text text-lg font-bold leading-tight line-clamp-1">
+                        {contest.title}
+                      </h2>
+                      <p className="theme-text-soft mt-1.5 text-sm line-clamp-2">
+                        {contest.description}
+                      </p>
                     </div>
 
-                    {/* INFO GRID */}
-                    <div className="mt-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+                    {/* INFO GRID — 3 equal columns, text never overflows */}
+                    <div className="grid grid-cols-3 gap-2">
 
-                      {/* START */}
-                      <div className="h-[70px] flex flex-col justify-between p-3 rounded-2xl bg-white/80 border border-blue-100 shadow-sm">
-                        <p className="text-[10px] uppercase text-gray-400">
-                          Start Date
+                      {/* START DATE */}
+                      <div className="contest-info-start flex flex-col gap-1 p-3 rounded-2xl bg-blue-50/80 border border-blue-100 shadow-sm overflow-hidden">
+                        <p className="text-[9px] font-semibold uppercase tracking-wider text-blue-400">
+                          Start
                         </p>
-                        <p className="text-sm font-semibold text-blue-600">
+                        <p className="text-xs font-bold text-blue-600 truncate">
                           {formatDate(contest.startDate)}
                         </p>
                       </div>
 
                       {/* DEADLINE */}
-                      <div className="h-[70px] flex flex-col justify-between p-4 rounded-2xl bg-white/80 border border-red-100 shadow-sm">
-                        <p className="text-[10px] uppercase text-gray-400">
+                      <div className="contest-info-deadline flex flex-col gap-1 p-3 rounded-2xl bg-red-50/80 border border-red-100 shadow-sm overflow-hidden">
+                        <p className="text-[9px] font-semibold uppercase tracking-wider text-red-400">
                           Deadline
                         </p>
-                        <p className="text-sm font-semibold text-red-500">
+                        <p className="text-xs font-bold text-red-500 truncate">
                           {formatDate(contest.deadline)}
                         </p>
                       </div>
 
                       {/* TYPE */}
-                      <div className="h-[70px] flex flex-col justify-between p-4 rounded-2xl bg-white/80 border border-green-100 shadow-sm">
-                        <p className="text-[10px] uppercase text-gray-400">
+                      <div className="contest-info-type flex flex-col gap-1 p-3 rounded-2xl bg-green-50/80 border border-green-100 shadow-sm overflow-hidden">
+                        <p className="text-[9px] font-semibold uppercase tracking-wider text-green-400">
                           Type
                         </p>
-                        <p className="text-sm font-semibold text-green-600 capitalize">
+                        <p className="text-xs font-bold text-green-600 capitalize truncate">
                           {getParticipationModeLabel(contest.participationType)}
                         </p>
                       </div>
 
                     </div>
 
-                    {/* FOOTER */}
-                    <div className="mt-4 flex flex-wrap gap-3 text-sm text-gray-500">
+                    {/* FOOTER BADGES */}
+                    <div className="flex flex-wrap gap-2">
 
-                      <span className="inline-flex items-center gap-2 rounded-full bg-lime-100 px-3 py-1 text-lime-700">
-                        <FiUsers />
-                        Max team size: {contest.maxTeamSize || 1}
+                      <span className="inline-flex items-center gap-1.5 rounded-full bg-lime-100 px-3 py-1 text-xs font-medium text-lime-700">
+                        <FiUsers size={11} />
+                        Max: {contest.maxTeamSize || 1}
                       </span>
 
                       {/* REWARDS */}
-                      {rewardsArray.length > 0 && (
-                        <div className="flex flex-wrap gap-2">
-                          {rewardsArray.map((reward, i) => (
-                            <span
-                              key={i}
-                              className="px-3 py-1 rounded-full text-xs bg-amber-100 text-amber-700"
-                            >
-                              {["🥇 1st", "🥈 2nd", "🥉 3rd"][i] || `#${i + 1}`} : ₹{reward.trim()}
-                            </span>
-                          ))}
-                        </div>
-                      )}
+                      {rewardsArray.map((reward, i) => (
+                        <span
+                          key={i}
+                          className="px-3 py-1 rounded-full text-xs font-medium bg-amber-100 text-amber-700"
+                        >
+                          {["🥇", "🥈", "🥉"][i] || `#${i + 1}`} ₹{reward.trim()}
+                        </span>
+                      ))}
 
                       {/* PDF */}
                       {briefingUrl && (
@@ -545,10 +534,10 @@ const ContestManagementPage = () => {
                           rel="noreferrer"
                           download
                           onClick={(event) => event.stopPropagation()}
-                          className="inline-flex items-center gap-2 rounded-full bg-sky-100 px-3 py-1 text-sky-700 hover:bg-sky-200"
+                          className="inline-flex items-center gap-1.5 rounded-full bg-sky-100 px-3 py-1 text-xs font-medium text-sky-700 hover:bg-sky-200 transition-colors"
                         >
-                          <FiDownload />
-                          Download {briefingName}
+                          <FiDownload size={11} />
+                          {briefingName || "Download PDF"}
                         </a>
                       )}
                     </div>
