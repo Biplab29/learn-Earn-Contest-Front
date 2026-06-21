@@ -102,6 +102,11 @@ const ContestDetails = () => {
           <div className="rounded-2xl overflow-hidden shadow-sm">
             <img
               src={contest.image}
+              onError={(e) => {
+                e.target.style.display = "none";
+                e.target.parentNode.style.background =
+                  "linear-gradient(135deg,#1e293b,#0f172a)";
+              }}
               className="w-full h-[380px] object-cover"
             />
           </div>
@@ -241,6 +246,11 @@ const ContestDetails = () => {
               >
                 <img
                   src={item.image}
+                  onError={(e) => {
+                    e.target.style.display = "none";
+                    e.target.parentNode.style.background =
+                      "linear-gradient(135deg,#1e293b,#0f172a)";
+                  }}
                   className="h-40 w-full object-cover rounded-t-xl"
                 />
 

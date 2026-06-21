@@ -65,6 +65,12 @@ const ContestsPage = () => {
       </div>
 
       {/* GRID */}
+      {contests.length === 0 ? (
+        <div className="theme-surface rounded-2xl p-12 text-center">
+          <p className="theme-text text-lg font-medium">No contests available</p>
+          <p className="theme-text-muted text-sm mt-2">Check back soon for new competitions!</p>
+        </div>
+      ) : (
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
 
         {contests.map((item) => {
@@ -81,8 +87,13 @@ const ContestsPage = () => {
               <div className="relative h-44 md:h-52 overflow-hidden">
 
                 <img
-                  src={item.image || "https://via.placeholder.com/400"}
+                  src={item.image || "/default-contest.jpg"}
                   alt={item.title}
+                  onError={(e) => {
+                    e.target.style.display = "none";
+                    e.target.parentNode.style.background =
+                      "linear-gradient(135deg,#1e293b,#0f172a)";
+                  }}
                   className="w-full h-full object-cover transition duration-700 group-hover:scale-110"
                 />
 
@@ -220,6 +231,7 @@ const ContestsPage = () => {
           );
         })}
       </div>
+      )}
 
       <ContestPreviewModal
         selectedContest={selectedContest}

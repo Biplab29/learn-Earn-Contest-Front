@@ -28,22 +28,32 @@ export const connectLoader = (showLoader, hideLoader) => {
 
 API.interceptors.request.use(
   (config) => {
-    if (loaderRef.show) loaderRef.show();
+    // skipLoader: true means this request should NOT trigger the global loader
+    // Used by keepAlive background pings so users don't see a flash of loader
+    if (!config.skipLoader && loaderRef.show) {
+      loaderRef.show();
+    }
     return config;
   },
   (error) => {
-    if (loaderRef.hide) loaderRef.hide();
+    if (!error.config?.skipLoader && loaderRef.hide) {
+      loaderRef.hide();
+    }
     return Promise.reject(error);
   }
 );
 
 API.interceptors.response.use(
   (response) => {
-    if (loaderRef.hide) loaderRef.hide();
+    if (!response.config?.skipLoader && loaderRef.hide) {
+      loaderRef.hide();
+    }
     return response;
   },
   (error) => {
-    if (loaderRef.hide) loaderRef.hide();
+    if (!error.config?.skipLoader && loaderRef.hide) {
+      loaderRef.hide();
+    }
     return Promise.reject(error);
   }
 );

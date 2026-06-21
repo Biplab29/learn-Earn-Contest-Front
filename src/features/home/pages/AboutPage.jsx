@@ -22,7 +22,7 @@ const AboutPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#f8fafc] via-white to-[#ecfdf5] p-4 md:p-8">
+    <div className="theme-page-shell min-h-screen p-4 md:p-8">
 
       {/* 🔥 HERO */}
       <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-[#82c600] via-[#a3e635] to-[#6ea800] p-10 md:p-14 text-white shadow-xl">
@@ -88,17 +88,17 @@ const AboutPage = () => {
         ].map((item, i) => (
           <div
             key={i}
-            className="group bg-white/70 backdrop-blur-xl border border-gray-200 p-6 rounded-2xl shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300"
+            className="group theme-surface rounded-2xl p-6 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 cursor-default"
           >
             <div className="text-[#82c600] text-2xl mb-4 group-hover:scale-110 transition">
               {item.icon}
             </div>
 
-            <h3 className="font-semibold text-gray-800">
+            <h3 className="theme-text font-semibold">
               {item.title}
             </h3>
 
-            <p className="text-sm text-gray-500 mt-2">
+            <p className="theme-text-muted text-sm mt-2">
               {item.desc}
             </p>
           </div>
@@ -116,12 +116,12 @@ const AboutPage = () => {
         ].map((item, i) => (
           <div
             key={i}
-            className="bg-white/60 backdrop-blur-lg border p-6 rounded-2xl text-center shadow-md hover:shadow-xl transition"
+            className="theme-surface rounded-2xl p-6 text-center hover:shadow-xl transition cursor-default"
           >
             <p className="text-3xl font-bold text-[#82c600]">
               {item.value}
             </p>
-            <p className="text-sm text-gray-500 mt-1">
+            <p className="theme-text-muted text-sm mt-1">
               {item.label}
             </p>
           </div>

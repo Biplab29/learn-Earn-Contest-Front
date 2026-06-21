@@ -4,6 +4,7 @@ import API from "../../../services/axios";
 import { Search, Users } from "lucide-react";
 import { toast } from "react-toastify";
 import UserAvatar from "@/components/ui/UserAvatar";
+import { UsersTableSkeleton } from "@/components/ui/SkeletonLoaders";
 import {
   formatRegistrationDate,
   normalizeUserProfileData,
@@ -172,7 +173,7 @@ const UsersPage = () => {
         </div>
 
         {loading ? (
-          <div className="p-6 text-center">Loading...</div>
+          <UsersTableSkeleton rows={7} />
         ) : filteredUsers.length === 0 ? (
           <div className="p-6 text-center">No users found</div>
         ) : (

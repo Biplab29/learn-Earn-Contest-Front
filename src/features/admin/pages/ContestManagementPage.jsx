@@ -22,6 +22,8 @@ import {
   getContestBriefingUrl,
 } from "@/utils/contestBriefing";
 import ContestPreviewModal from "./ContestPreviewModal";
+import { ContestGridSkeleton } from "@/components/ui/SkeletonLoaders";
+
 
 const emptyForm = {
   id: "",
@@ -411,9 +413,7 @@ const ContestManagementPage = () => {
       </div>
 
       {loading ? (
-        <div className="theme-surface rounded-3xl border border-dashed px-6 py-16 text-center theme-text-muted">
-
-        </div>
+        <ContestGridSkeleton count={4} />
       ) : filteredContests.length === 0 ? (
         <div className="theme-surface rounded-3xl border border-dashed px-6 py-16 text-center theme-text-muted">
           No contests found
